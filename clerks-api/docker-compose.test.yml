@@ -1,0 +1,12 @@
+version: '3'
+
+services:
+  test_db:
+    image: postgres
+    container_name: clerks-api-postgres-test
+    environment:
+      - POSTGRES_DB=clerks_api_test
+      - POSTGRES_USER=test
+      - POSTGRES_PASSWORD=test
+    ports:
+      - "5435:5432"
