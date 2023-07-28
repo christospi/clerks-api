@@ -61,6 +61,10 @@ development:
 test:
   <<: *default
   database: clerks_api_test
+  username: test
+  password: test
+  port: 5435
+  host: localhost
 
 # As with config/credentials.yml, you never want to store sensitive information,
 # like your database password, in your source code. If your source code is
