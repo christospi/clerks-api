@@ -1,0 +1,29 @@
+<h1>Clerks</h1>
+
+<table>
+  <tr>
+    <th>Picture</th>
+    <th>First Name</th>
+    <th>Last Name</th>
+    <th>Email</th>
+    <th>Phone</th>
+    <th>Registration Date</th>
+  </tr>
+
+  <% @clerks.each do |clerk| %>
+    <tr>
+      <% if clerk.picture.attached? %>
+        <td><%= image_tag url_for(clerk.picture), size: '100x100', alt: 'Clerk Picture' %></td>
+      <% else %>
+        <td><%= 'No photo :(' %></td>
+      <% end %>
+      <td><%= clerk.first_name %></td>
+      <td><%= clerk.last_name %></td>
+      <td><%= clerk.email %></td>
+      <td><%= clerk.phone %></td>
+      <td><%= clerk.registration_date %></td>
+    </tr>
+  <% end %>
+</table>
+
+<%= link_to 'Back to Home', root_path %>
