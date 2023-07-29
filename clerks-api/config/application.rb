@@ -19,5 +19,6 @@ module ClerksApi
     # config.time_zone = "Central Time (US & Canada)"
 
     config.eager_load_paths << Rails.root.join('lib/services/random_user')
+    config.eager_load_paths << Rails.root.join('lib/utils')
   end
 end
