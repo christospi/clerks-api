@@ -37,8 +37,37 @@ Layout/FirstArrayElementIndentation:
 Layout/FirstHashElementIndentation:
   EnforcedStyle: consistent
 
+Layout/MultilineMethodCallIndentation:
+  Enabled: false
+
 Style/AndOr:
   EnforcedStyle: conditionals
 
 Style/FrozenStringLiteralComment:
   Enabled: false
+
+Style/Documentation:
+  Enabled: false
+
+Style/ConditionalAssignment:
+  Enabled: false
+
+Style/ModuleFunction:
+  Enabled: false
+
+Style/HashSyntax:
+  EnforcedShorthandSyntax: either
+
+Style/GuardClause:
+  Enabled: false
+
+Style/StringLiterals:
+  Exclude:
+    - 'db/migrate/*'
+    - 'db/schema.rb'
+
+RSpec/ExampleLength:
+  Max: 100
+
+RSpec/NestedGroups:
+  Max: 5
