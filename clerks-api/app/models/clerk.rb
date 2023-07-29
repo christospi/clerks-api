@@ -16,6 +16,38 @@ class Clerk < ApplicationRecord
 
   before_save { email.downcase! if email_changed? }
 
+  # Create Clerk records from users fetched from the RandomUser API. If a user
+  # fails to be created, the error is logged and the process continues.
+  #
+  # @option options [Integer] :size (5) The number of users to fetch and create.
+  # @return [void]
+  def self.create_from_random_user(size: 5)
+    users = RandomUser.fetch_users(size: size)
+    success_count = 0
+
+    users.each do |user|
+      attributes = RandomUserSerializer.to_clerk_attributes(user)
+
+      clerk = Clerk.new(attributes.except(:picture_url))
+      picture = Downloader.download(attributes[:picture_url])
+
+      if picture.present?
+        clerk.picture.attach(io: picture, filename: "#{Digest::MD5.hexdigest(clerk.email)}.jpg",
+                             content_type: 'image/jpeg')
+      end
+
+      if clerk.save
+        Rails.logger.info("Successfully created Clerk record for #{clerk.email}")
+        success_count += 1
+      else
+        errors = clerk.errors.full_messages.join(', ')
+        Rails.logger.error("Failed to create Clerk record for #{attributes[:email]}: #{errors}")
+      end
+    end
+
+    Rails.logger.info("Successfully created #{success_count}/#{size} Clerk records")
+  end
+
   private
 
   def acceptable_picture

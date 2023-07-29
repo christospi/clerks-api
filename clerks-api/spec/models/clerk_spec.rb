@@ -76,4 +76,30 @@ RSpec.describe Clerk, type: :model do
 
     expect(clerk).not_to be_valid
   end
+
+  describe '.create_from_random_user' do
+    let(:random_user_response) do
+      Array.wrap(JSON.parse(File.read(Rails.root.join('spec/fixtures/random_user/response.json')))['results'].first)
+    end
+    let(:user) { random_user_response.first }
+
+    before do
+      allow(RandomUser).to receive(:fetch_users).and_return(random_user_response)
+
+      picture_file = File.open(Rails.root.join('spec/fixtures/files/picture.jpg'))
+      allow(Downloader).to receive(:download).and_return(picture_file)
+    end
+
+    it 'creates a new Clerk record', :aggregate_failures do
+      expect { described_class.create_from_random_user }.to change(described_class, :count).by(1)
+      clerk = described_class.first
+
+      expect(clerk.first_name).to eq(user['name']['first'])
+      expect(clerk.last_name).to eq(user['name']['last'])
+      expect(clerk.email).to eq(user['email'])
+      expect(clerk.phone).to eq(user['phone'])
+      expect(clerk.registration_date).to eq(DateTime.parse(user['registered']['date']))
+      expect(clerk.picture).to be_attached
+    end
+  end
 end
