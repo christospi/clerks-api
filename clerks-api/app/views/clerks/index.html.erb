@@ -15,7 +15,7 @@
       <% if clerk.picture.attached? %>
         <td><%= image_tag url_for(clerk.picture), size: '100x100', alt: 'Clerk Picture' %></td>
       <% else %>
-        <td><%= 'No photo :(' %></td>
+        <td><%= image_tag 'clerk/picture.jpg', size: '100x100', alt: 'Default Picture' %></td>
       <% end %>
       <td><%= clerk.first_name %></td>
       <td><%= clerk.last_name %></td>
