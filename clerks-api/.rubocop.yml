@@ -42,3 +42,14 @@ Style/AndOr:
 
 Style/FrozenStringLiteralComment:
   Enabled: false
+
+Style/Documentation:
+  Enabled: false
+
+Style/StringLiterals:
+  Exclude:
+    - 'db/migrate/*'
+    - 'db/schema.rb'
+
+RSpec/ExampleLength:
+  Max: 100
