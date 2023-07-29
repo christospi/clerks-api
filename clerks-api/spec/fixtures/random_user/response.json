@@ -1,0 +1,40 @@
+{
+  "results": [
+    {
+      "name": {
+        "title": "Mr",
+        "first": "Želimir",
+        "last": "Rađen"
+      },
+      "email": "zelimir.raden@example.com",
+      "registered": {
+        "date": "2008-09-19T23:58:40.932Z",
+        "age": 14
+      },
+      "phone": "029-3667-418",
+      "picture": {
+        "large": "https://randomuser.me/api/portraits/men/78.jpg",
+        "medium": "https://randomuser.me/api/portraits/med/men/78.jpg",
+        "thumbnail": "https://randomuser.me/api/portraits/thumb/men/78.jpg"
+      }
+    },
+    {
+      "name": {
+        "title": "Mrs",
+        "first": "Isabella",
+        "last": "Grewal"
+      },
+      "email": "isabella.grewal@example.com",
+      "registered": {
+        "date": "2006-02-21T06:08:35.589Z",
+        "age": 17
+      },
+      "phone": "W32 H02-5372",
+      "picture": {
+        "large": "https://randomuser.me/api/portraits/women/42.jpg",
+        "medium": "https://randomuser.me/api/portraits/med/women/42.jpg",
+        "thumbnail": "https://randomuser.me/api/portraits/thumb/women/42.jpg"
+      }
+    }
+  ]
+}
