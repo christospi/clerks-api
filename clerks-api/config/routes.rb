@@ -7,4 +7,7 @@ Rails.application.routes.draw do
   # Routes for "clerks" resource
   # GET /clerks
   resources :clerks, only: [:index]
+
+  # POST /populate
+  post '/populate', to: 'clerks#populate'
 end
