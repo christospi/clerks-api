@@ -8,5 +8,16 @@ services:
       - POSTGRES_DB=clerks_api_test
       - POSTGRES_USER=test
       - POSTGRES_PASSWORD=test
-    ports:
-      - "5435:5432"
+
+  test:
+    build: .
+    command: "bundle exec rspec"
+    volumes:
+      - app-storage:/rails/storage
+    environment:
+      - RAILS_ENV=test
+    depends_on:
+      - test_db
+
+volumes:
+  app-storage: {}
