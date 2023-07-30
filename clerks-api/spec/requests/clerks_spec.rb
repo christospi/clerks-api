@@ -74,10 +74,10 @@ RSpec.describe 'Clerks', type: :request do
       expect { post '/populate' }.to change(Clerk, :count).by(1)
     end
 
-    it 'redirects to the clerks index page' do
+    it 'redirects to the home page' do
       post '/populate'
 
-      expect(response).to redirect_to(clerks_path)
+      expect(response).to redirect_to(root_path)
     end
   end
 end
