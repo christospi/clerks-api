@@ -86,7 +86,7 @@ class ClerksController < ApplicationController
       status = 'success'
     elsif success.positive?
       message = "#{success} out of #{total} users were created successfully."
-      flash[:alert] = message
+      flash[:warning] = message
       status = 'warning'
     else
       message = 'No users were created.'
