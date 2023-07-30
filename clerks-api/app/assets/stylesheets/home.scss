@@ -1,0 +1,25 @@
+.home-page {
+  .centered-title {
+    text-align: center;
+  }
+
+  .action-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+
+    .btn-action {
+      color: white;
+      background-color: #477ebe;
+      border-radius: 5px;
+      border: 1px solid #477ebe;
+      padding: 15px 32px;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      font-size: 16px;
+      margin: 4px 2px;
+      cursor: pointer;
+    }
+  }
+}
