@@ -76,7 +76,7 @@ class ClerksController < ApplicationController
 
   # POST /populate
   def populate
-    resp = Clerk.create_from_random_user(size: 1)
+    resp = Clerk.create_from_random_user(size: 5000)
     success = resp[:success_count]
     total = resp[:total_count]
 
