@@ -25,6 +25,33 @@ class Clerk < ApplicationRecord
   #  - :total_count [Integer] The total number of Clerk records that were attempted to be created.
   def self.create_from_random_user(size: 5)
     users = RandomUser.fetch_users(size: size)
+    success_count = create_clerks_and_enqueue_pictures(users)
+
+    if success_count < size
+      3.times do
+        users = RandomUser.fetch_users(size: size - success_count)
+        success_count += create_clerks_and_enqueue_pictures(users)
+
+        break if success_count >= size
+      end
+    end
+
+    Rails.logger.info("Successfully created #{success_count}/#{size} Clerk records")
+
+    # Return the number of successfully created Clerk records and the total
+    { success_count: success_count, total_count: size }
+  end
+
+  private
+
+  def acceptable_picture
+    return unless picture.attached?
+
+    errors.add(:picture, 'is too big') unless picture.byte_size < VALID_PICTURE_SIZE
+    errors.add(:picture, 'must be JPEG or PNG') unless VALID_PICTURE_TYPES.include?(picture.content_type)
+  end
+
+  def self.create_clerks_and_enqueue_pictures(users)
     success_count = 0
 
     users.each do |user|
@@ -44,18 +71,8 @@ class Clerk < ApplicationRecord
       end
     end
 
-    Rails.logger.info("Successfully created #{success_count}/#{size} Clerk records")
-
-    # Return the number of successfully created Clerk records and the total
-    { success_count: success_count, total_count: size }
+    success_count
   end
 
-  private
-
-  def acceptable_picture
-    return unless picture.attached?
-
-    errors.add(:picture, 'is too big') unless picture.byte_size < VALID_PICTURE_SIZE
-    errors.add(:picture, 'must be JPEG or PNG') unless VALID_PICTURE_TYPES.include?(picture.content_type)
-  end
+  private_class_method :create_clerks_and_enqueue_pictures
 end
