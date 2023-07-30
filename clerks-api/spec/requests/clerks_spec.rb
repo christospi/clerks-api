@@ -2,10 +2,59 @@ require 'rails_helper'
 
 RSpec.describe 'Clerks', type: :request do
   describe 'GET /index' do
+    # TODO: FactoryBot I miss you :(
+    def generate_clerk_attributes(index)
+      {
+        first_name: "First Name #{index}",
+        last_name: "Last Name #{index}",
+        email: "email#{index}@example.com",
+        phone: (index.to_s * 10),
+        registration_date: index.days.ago
+      }
+    end
+
+    let!(:clerks) do
+      (1..3).map do |index|
+        Clerk.create!(generate_clerk_attributes(index))
+      end
+    end
+
     it 'returns http success' do
       get '/clerks'
 
       expect(response).to have_http_status(:success)
+    end
+
+    context 'when no search params are provided' do
+      it 'returns all clerks' do
+        get '/clerks'
+
+        expect(assigns(:clerks)).to match_array(clerks)
+      end
+    end
+
+    context 'with ending_before param' do
+      it 'returns clerks with registration_date and id less than the given clerk' do
+        get '/clerks', params: { ending_before: clerks[2].id }
+        expect(assigns(:clerks)).to match_array(clerks[0..1])
+      end
+
+      it 'returns no clerks if the given clerk does not exist' do
+        get '/clerks', params: { ending_before: 0 }
+        expect(assigns(:clerks)).to be_empty
+      end
+    end
+
+    context 'with starting_after param' do
+      it 'returns clerks with registration_date and id greater than the given clerk' do
+        get '/clerks', params: { starting_after: clerks[0].id }
+        expect(assigns(:clerks)).to match_array(clerks[1..2])
+      end
+
+      it 'returns no clerks if the given clerk does not exist' do
+        get '/clerks', params: { starting_after: 0 }
+        expect(assigns(:clerks)).to be_empty
+      end
     end
   end
 
