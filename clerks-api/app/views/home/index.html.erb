@@ -1,6 +1,8 @@
-<h1>Hi there!</h1>
+<div class="home-page">
+  <h1 class="centered-title">Welcome to Clerks-API</h1>
 
-<ul>
-  <li><%= link_to 'Clerks are waiting!', clerks_path %></li>
-  <li><%= link_to 'Populate with more!', populate_path, data: { turbo_method: :post } %></li>
-</ul>
+  <div class="action-buttons">
+    <a href="<%= clerks_path %>" class="btn btn-action">Show Clerks 👩‍💼</a>
+    <a href="<%= populate_path %>" class="btn btn-action" data-turbo-action="post">Populate Clerks 🚀</a>
+  </div>
+</div>
