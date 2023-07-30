@@ -20,7 +20,9 @@ class Clerk < ApplicationRecord
   # fails to be created, the error is logged and the process continues.
   #
   # @option options [Integer] :size (5) The number of users to fetch and create.
-  # @return [void]
+  # @return [Hash] A hash containing the following keys:
+  #  - :success_count [Integer] The number of successfully created Clerk records.
+  #  - :total_count [Integer] The total number of Clerk records that were attempted to be created.
   def self.create_from_random_user(size: 5)
     users = RandomUser.fetch_users(size: size)
     success_count = 0
@@ -46,6 +48,9 @@ class Clerk < ApplicationRecord
     end
 
     Rails.logger.info("Successfully created #{success_count}/#{size} Clerk records")
+
+    # Return the number of successfully created Clerk records and the total
+    { success_count: success_count, total_count: size }
   end
 
   private
