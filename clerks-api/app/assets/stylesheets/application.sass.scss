@@ -8,3 +8,37 @@ $font-family-sans: 'Lato', 'Segoe UI', Roboto, Oxygen, 'Open Sans', 'Helvetica N
 body {
   font-family: $font-family-sans;
 }
+
+.flash-container {
+  display: flex;
+  justify-content: center;
+
+  .alert {
+    display: flex;
+    justify-content: center;
+    padding: 15px;
+    margin-bottom: 20px;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    max-width: 75%;
+    text-align: center;
+
+    &-success {
+      color: #3c763d;
+      background-color: #dff0d8;
+      border-color: #d6e9c6;
+    }
+
+    &-warning {
+      color: #8a6d3b;
+      background-color: #fcf8e3;
+      border-color: #faebcc;
+    }
+
+    &-danger {
+      color: #a94442;
+      background-color: #f2dede;
+      border-color: #ebccd1;
+    }
+  }
+}

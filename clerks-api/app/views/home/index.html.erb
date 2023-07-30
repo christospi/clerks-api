@@ -1,6 +1,14 @@
 <div class="home-page">
   <h1 class="centered-title">Welcome to Clerks-API</h1>
 
+  <div class="flash-container">
+    <% flash.each do |key, value| %>
+      <div class="alert alert-<%= key %>">
+        <%= value %>
+      </div>
+    <% end %>
+  </div>
+
   <div class="action-buttons">
     <a href="<%= clerks_path %>" class="btn btn-action">Show Clerks 👩‍💼</a>
     <a href="<%= populate_path %>" class="btn btn-action" data-turbo-method="post">Populate Clerks 🚀</a>
