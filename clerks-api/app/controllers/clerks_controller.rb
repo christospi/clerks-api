@@ -76,9 +76,28 @@ class ClerksController < ApplicationController
 
   # POST /populate
   def populate
-    Clerk.create_from_random_user
+    resp = Clerk.create_from_random_user(size: 1)
+    success = resp[:success_count]
+    total = resp[:total_count]
 
-    redirect_to clerks_path
+    if success == total
+      message = "All #{total} users were created successfully."
+      flash[:success] = message
+      status = 'success'
+    elsif success.positive?
+      message = "#{success} out of #{total} users were created successfully."
+      flash[:alert] = message
+      status = 'warning'
+    else
+      message = 'No users were created.'
+      flash[:error] = message
+      status = 'failure'
+    end
+
+    respond_to do |format|
+      format.html { redirect_to root_path }
+      format.json { render json: resp.merge(message: message, status: status) }
+    end
   end
 
   private
