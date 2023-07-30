@@ -1,4 +1,4 @@
-# My Clerks API
+# My Clerks API ⚙️
 
 This is a Dockerized Rails 7 app that provides an interface to manage and retrieve `Clerk` data. The application uses the [RandomUser.com](http://randomuser.com/) API to populate the database with `Clerk` entries (initialized with random user attributes) and provides endpoints to fetch and filter the data.
 
@@ -17,9 +17,9 @@ The purpose of this project is to showcase best practices, coding principles, an
 
 Ensure you have Docker and Docker Compose installed on your machine.
 
-To install Docker, follow the instructions here: https://docs.docker.com/engine/install/
+- To install Docker, follow the instructions here: https://docs.docker.com/engine/install/
 
-To install Docker Compose Plugin, follow the instructions here: https://docs.docker.com/compose/install/
+- To install Docker Compose, follow the instructions here: https://www.digitalocean.com/community/tutorials/how-to-install-and-use-docker-compose-on-ubuntu-20-04#step-1-installing-docker-compose (as it is tested using the `docker-compose` v1. Alternatively, you could try v2 version from here: https://docs.docker.com/compose but I am not sure about the `docker-compose.yml` compatibility)
 
 All the actual application dependencies are handled by Docker. Check `Dockerfile` and `docker-compose.yml` files for more info on that.
 
@@ -45,7 +45,22 @@ The application uses environment variables for configuration. A `.env.sample` fi
         cp .env.sample .env
         ```
 
-    2. Open the `.env` file in a text editor and replace the placeholder values with your actual values.
+    2. Open the `.env` file in a text editor and replace the placeholder values with your actual values... **OR**
+    3. <details>
+        <summary>Use mine... 🤫🔫🔪</summary>
+        
+        ```
+        # Database config
+        POSTGRES_DB=clerks_api_development
+        POSTGRES_HOST=localhost
+        POSTGRES_USER=master_clerk
+        POSTGRES_PASSWORD=youshallnotpass
+        
+        # Rails config
+        RAILS_ENV=development
+        RAILS_MASTER_KEY=df3fb452496d94ca83cf44ae77f829d6
+        ```
+    </details>     
 4. **Build and start the Docker containers:**
 
     ```bash
@@ -57,7 +72,7 @@ The application uses environment variables for configuration. A `.env.sample` fi
 
 ## Running the application
 
-Once the Docker containers are up and running, the Clerks-API will be available at `http://localhost:3000`
+Once the Docker containers are up and running, Clerks-API will be available at `http://localhost:3000`
 
 ## Running tests
 
@@ -73,7 +88,7 @@ This will build and start the Docker containers and run all the `rspec` tests.
 
 The API exposes the following endpoints:
 
-- `POST /populate`: Populates the database with 5K users from RandomUser API, creating a `Clerk` record for each one.
+- `POST /populate`: Populates the database with 5K users from RandomUser API, creating a `Clerk` record for each one. It creates `Clerk` records synchronously but downloads and attaches images asynchronously (hopefully, for performance optimization). 
 - `GET /clerks`: Returns a list of `Clerk` records sorted by registration date, with the most recent users appearing first. Supports optional parameters for filtering and pagination. Currently supported optional parameters:
     - `limit`: A limit on the number of Clerks to be returned, ranging between 1 and 100.
     - `starting_after`: A cursor for use in pagination. `starting_after` is a Clerk ID that
@@ -154,11 +169,12 @@ This will return up to 20 clerks whose ID comes after 100, sorted by registratio
 
 The project follows a typical Rails application structure with models, controllers, and services with a few additions. Apart from the expected classes/modules supporting our main model (`Clerk`), it includes the following:
 
-- **Services**: Located in `lib/services` directory, these files encapsulate business logic that doesn't belong in models or controllers of our app. This includes the `RandomUser` module used to fetch user data from the [RandomUser.com](http://randomuser.com/) API.
+- **Services:** Located in `lib/services` directory, these files encapsulate business logic that doesn't belong in models or controllers of our app. This includes the `RandomUser` module used to fetch user data from the [RandomUser.com](http://randomuser.com/) API. It fetches user data in batches to avoid overwhelming the API with a single large request.
 - **Utilities:** General purpose helpers that may be used across different models, services, or other parts of the application (DRY is our motto here!). These utilities can be found under `lib/utils`. Currently, we only have `Downloader` module, which abstracts the process of a file download (used to fetch user pictures from RandomUser.com).
-- **Serializers**: Located in the `app/serializers` directory, these files handle the conversion of data for application models. It contains `RandomUserSerializer` which is responsible for transforming data from the Random User API into a format that can be used by the `Clerk` model.
-- **Specs**: Test coverage is provided by RSpec. Located in the `spec` directory, these files contain the test suite for our application, including unit tests for models and controller actions, along with a few request tests.
-- **Dockerfile and docker-compose.yml**: These files define the Docker configuration for setting up and running the application in a Docker container. It handles both our database (Postgres) and the Rails app.
+- **Serializers:** Located in the `app/serializers` directory, these files handle the conversion of data for application models. It contains `RandomUserSerializer` which is responsible for transforming data from the Random User API into a format that can be used by the `Clerk` model.
+- **Jobs:** Background job classes that handle async tasks, located under `app/jobs` directory. It includes `ClerkPictureDownloadJob`, which supports downloading and attaching a picture to the passed `Clerk` record in the background. `ClerkPictureDownloadJob` current implementation is based on `ActiveJob` framework, without a persisted queueing system in backend (sorry, only RAM for now, be sure not to unplug your system).
+- **Specs:** Test coverage is provided by RSpec. Located in the `spec` directory, these files contain the test suite for our application, including unit tests for models and controller actions, along with a few request tests.
+- **Dockerfile and docker-compose.yml:** These files define the Docker configuration for setting up and running the application in a Docker container. It handles both our database (Postgres) and the Rails app.
 - **.env.sample:** Sample configuration files for the required environment variables. Following the instructructions in **Setup** section, you should create a new local file named `.env` in application root directory with the appropriate values.
 
 ## **Troubleshooting**
