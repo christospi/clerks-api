@@ -1,1 +1,10 @@
 // Entry point for your Sass build
+@import "home";
+@import "clerks";
+
+// Set fonts globally
+$font-family-sans: 'Lato', 'Segoe UI', Roboto, Oxygen, 'Open Sans', 'Helvetica Neue', sans-serif;
+
+body {
+  font-family: $font-family-sans;
+}
