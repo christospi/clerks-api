@@ -31,14 +31,11 @@ class Clerk < ApplicationRecord
       attributes = RandomUserSerializer.to_clerk_attributes(user)
 
       clerk = Clerk.new(attributes.except(:picture_url))
-      picture = Downloader.download(attributes[:picture_url])
-
-      if picture.present?
-        clerk.picture.attach(io: picture, filename: "#{Digest::MD5.hexdigest(clerk.email)}.jpg",
-                             content_type: 'image/jpeg')
-      end
 
       if clerk.save
+        # Download the picture in the background
+        ClerkPictureDownloadJob.perform_later(clerk.id, attributes[:picture_url])
+
         Rails.logger.info("Successfully created Clerk record for #{clerk.email}")
         success_count += 1
       else
