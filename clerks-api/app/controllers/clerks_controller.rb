@@ -2,6 +2,14 @@ class ClerksController < ApplicationController
   DEFAULT_PAGE_SIZE = 10
   MAX_PAGE_SIZE = 100
 
+  # TODO: Rails provides by default CSRF protection for POST requests.
+  # However, we need to disable it for the `populate` action (for now) as we
+  # intend to (possibly) use it from an API client.
+  #
+  # Consider providing a separate authentication mechanism for API clients
+  # (e.g. API tokens) and re-enabling CSRF protection for the `populate` action.
+  protect_from_forgery except: :populate
+
   # GET /clerks
   def index
     params = index_params
