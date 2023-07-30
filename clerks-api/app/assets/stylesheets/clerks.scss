@@ -1,0 +1,83 @@
+.clerks-index-page {
+  position: relative;
+
+  .homepage-link {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    color: #477ebe;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 18px;
+
+    &:hover {
+      color: #adb5bd;
+      text-decoration: none;
+    }
+  }
+
+  h1 {
+    text-align: center;
+  }
+
+  table {
+    width: 90%;
+    margin: auto;
+    border-collapse: collapse;
+
+    th,
+    td {
+      border: 1px solid #ddd;
+      padding: 8px;
+    }
+
+    tr:nth-child(even) {
+      background-color: #f2f2f2;
+    }
+
+    tr:hover {
+      background-color: #ddd;
+    }
+
+    th {
+      padding-top: 12px;
+      padding-bottom: 12px;
+      text-align: left;
+      background-color: #477ebe;
+      color: white;
+    }
+  }
+}
+
+.pagination-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin-top: 20px;
+
+  .btn {
+    background-color: #f8f9fa;
+    color: #343a40;
+    border: 1px solid #ced4da;
+    text-decoration: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-size: 14px;
+    transition: all 0.2s ease-in-out;
+
+    &:hover {
+      background-color: #e2e6ea;
+    }
+
+    &.disabled {
+      background-color: #e9ecef;
+      border-color: #dee2e6;
+      color: #adb5bd;
+      cursor: not-allowed;
+
+      &:hover {
+        background-color: #e9ecef;
+      }
+    }
+  }
+}

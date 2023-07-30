@@ -1,29 +1,48 @@
-<h1>Clerks</h1>
+<div class="clerks-index-page">
+  <a href="/" class="homepage-link">Home</a>
 
-<table>
-  <tr>
-    <th>Picture</th>
-    <th>First Name</th>
-    <th>Last Name</th>
-    <th>Email</th>
-    <th>Phone</th>
-    <th>Registration Date</th>
-  </tr>
+  <h1>Clerks</h1>
 
-  <% @clerks.each do |clerk| %>
+  <table>
+    <thead>
     <tr>
-      <% if clerk.picture.attached? %>
-        <td><%= image_tag url_for(clerk.picture), size: '100x100', alt: 'Clerk Picture' %></td>
-      <% else %>
-        <td><%= image_tag 'clerk/picture.jpg', size: '100x100', alt: 'Default Picture' %></td>
-      <% end %>
-      <td><%= clerk.first_name %></td>
-      <td><%= clerk.last_name %></td>
-      <td><%= clerk.email %></td>
-      <td><%= clerk.phone %></td>
-      <td><%= clerk.registration_date %></td>
+      <th>Picture</th>
+      <th>First Name</th>
+      <th>Last Name</th>
+      <th>Email</th>
+      <th>Phone</th>
+      <th>Registration Date</th>
     </tr>
-  <% end %>
-</table>
+    </thead>
 
-<%= link_to 'Back to Home', root_path %>
+    <tbody>
+    <% @clerks.each do |clerk| %>
+      <tr>
+        <% if clerk.picture.attached? %>
+          <td><%= image_tag url_for(clerk.picture), size: '100x100', alt: 'Clerk Picture' %></td>
+        <% else %>
+          <td><%= image_tag 'clerk/picture.jpg', size: '100x100', alt: 'Default Picture' %></td>
+        <% end %>
+        <td><%= clerk.id %> | <%= clerk.first_name %></td>
+        <td><%= clerk.last_name %></td>
+        <td><%= clerk.email %></td>
+        <td><%= clerk.phone %></td>
+        <td><%= clerk.registration_date.to_formatted_s(:long) %></td>
+      </tr>
+    <% end %>
+    </tbody>
+  </table>
+
+  <div class="pagination-buttons">
+    <% if @has_previous_page %>
+      <%= link_to 'Previous Page', clerks_path(ending_before: @clerks.first.id, limit: params[:limit]), class: "btn btn-primary" %>
+    <% else %>
+      <%= button_to 'Previous Page', nil, class: "btn btn-primary disabled", disabled: true, method: :get %>
+    <% end %>
+    <% if @has_next_page %>
+      <%= link_to 'Next Page', clerks_path(starting_after: @clerks.last.id, limit: params[:limit]), class: "btn btn-primary" %>
+    <% else %>
+      <%= button_to 'Next Page', nil, class: "btn btn-primary disabled", disabled: true, method: :get %>
+    <% end %>
+  </div>
+</div>
