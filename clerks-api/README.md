@@ -1,5 +1,3 @@
-# README
-
 # My Clerks API
 
 This is a Dockerized Rails 7 app that provides an interface to manage and retrieve `Clerk` data. The application uses the [RandomUser.com](http://randomuser.com/) API to populate the database with `Clerk` entries (initialized with random user attributes) and provides endpoints to fetch and filter the data.
@@ -107,10 +105,10 @@ Upon successful completion, this endpoint will return a status of 200 and a mess
 
 ```json
 {
-	"success_count": 5,
-	"total_count": 5,
-	"message": "All 5 users were created successfully.",
-	"status": "success"
+  "success_count": 5,
+  "total_count": 5,
+  "message": "All 5 users were created successfully.",
+  "status": "success"
 }
 ```
 
@@ -128,17 +126,17 @@ This endpoint returns a list of clerks. The response contains an array of Clerk 
 
 ```json
 [
-	{
-			"id": 5,
-			"first_name": "Annabelle",
-			"last_name": "Wilson",
-			"email": "annabelle.wilson@example.com",
-			"phone": "(307)-178-1138",
-			"registration_date": "2022-05-03T07:26:23.952Z",
-			"created_at": "2023-07-29T13:34:21.247Z",
-			"updated_at": "2023-07-29T13:34:21.253Z"
-		},
-		// more records
+  {
+    "id": 5,
+    "first_name": "Annabelle",
+    "last_name": "Wilson",
+    "email": "annabelle.wilson@example.com",
+    "phone": "(307)-178-1138",
+    "registration_date": "2022-05-03T07:26:23.952Z",
+    "created_at": "2023-07-29T13:34:21.247Z",
+    "updated_at": "2023-07-29T13:34:21.253Z"
+  },
+  // ... more records
 ]
 ```
 
@@ -157,11 +155,11 @@ This will return up to 20 clerks whose ID comes after 100, sorted by registratio
 The project follows a typical Rails application structure with models, controllers, and services with a few additions. Apart from the expected classes/modules supporting our main model (`Clerk`), it includes the following:
 
 - **Services**: Located in `lib/services` directory, these files encapsulate business logic that doesn't belong in models or controllers of our app. This includes the `RandomUser` module used to fetch user data from the [RandomUser.com](http://randomuser.com/) API.
-- **********************Utilities:********************** General purpose helpers that may be used across different models, services, or other parts of the application (DRY is our motto here!). These utilities can be found under `lib/utils`. Currently, we only have `Downloader` module, which abstracts the process of a file download (used to fetch user pictures from RandomUser.com).
+- **Utilities:** General purpose helpers that may be used across different models, services, or other parts of the application (DRY is our motto here!). These utilities can be found under `lib/utils`. Currently, we only have `Downloader` module, which abstracts the process of a file download (used to fetch user pictures from RandomUser.com).
 - **Serializers**: Located in the `app/serializers` directory, these files handle the conversion of data for application models. It contains `RandomUserSerializer` which is responsible for transforming data from the Random User API into a format that can be used by the `Clerk` model.
 - **Specs**: Test coverage is provided by RSpec. Located in the `spec` directory, these files contain the test suite for our application, including unit tests for models and controller actions, along with a few request tests.
 - **Dockerfile and docker-compose.yml**: These files define the Docker configuration for setting up and running the application in a Docker container. It handles both our database (Postgres) and the Rails app.
-- **************************.env.sample:************************** Sample configuration files for the required environment variables. Following the instructructions in ********Setup******** section, you should create a new local file named `.env` in application root directory with the appropriate values.
+- **.env.sample:** Sample configuration files for the required environment variables. Following the instructructions in **Setup** section, you should create a new local file named `.env` in application root directory with the appropriate values.
 
 ## **Troubleshooting**
 
