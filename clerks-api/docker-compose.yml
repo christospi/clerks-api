@@ -13,24 +13,5 @@ services:
     ports:
       - "5432:5432"
 
-  web:
-    build: .
-    command: "./bin/rails server -b 0.0.0.0"
-    # command: bash -c "rm -f tmp/pids/server.pid && bundle exec rails s -p 3000 -b '0.0.0.0'"
-    environment:
-      - RAILS_ENV=${RAILS_ENV}
-      - POSTGRES_HOST=db
-      - POSTGRES_DB=${POSTGRES_DB}
-      - POSTGRES_USER=${POSTGRES_USER}
-      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
-      - RAILS_MASTER_KEY=${RAILS_MASTER_KEY}
-    volumes:
-      - app-storage:/rails/storage
-    depends_on:
-      - db
-    ports:
-      - "3000:3000"
-
 volumes:
   postgres_data: {}
-  app-storage: {}
