@@ -191,11 +191,3 @@ You may also need to check the container logs to debug any issues:
 ```bash
 docker-compose logs
 ```
-
-## Wrapping Up 🙏
-
-That was a blast! 🚀 Really enjoyed putting this together – it's not every day you get to juggle API endpoints, random users, and Docker all at the same time!
-
-Big thanks for throwing this challenge my way. Hope you enjoy checking it out as much as I did building it. And if there's anything that made you go "hmm" or "huh?" (of course there will be!), I'm all ears. Always keen to learn and grow.
-
-Thanks!
