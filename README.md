@@ -1,4 +1,4 @@
-# Clerks API 👥⚙️
+# Clerks API 👥
 
 This is a Dockerized Rails 7 app that provides an interface to manage and retrieve `Clerk` data. The application uses the [RandomUser.com](http://randomuser.com/) API to populate the database with `Clerk` entries (initialized with random user attributes) and provides endpoints to fetch and filter the data.
 
