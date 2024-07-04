@@ -1,4 +1,4 @@
-# My Clerks API ⚙️
+# Clerks API 👥⚙️
 
 This is a Dockerized Rails 7 app that provides an interface to manage and retrieve `Clerk` data. The application uses the [RandomUser.com](http://randomuser.com/) API to populate the database with `Clerk` entries (initialized with random user attributes) and provides endpoints to fetch and filter the data.
 
@@ -28,13 +28,13 @@ All the actual application dependencies are handled by Docker. Check `Dockerfile
 1. **Clone the repository:**
 
     ```bash
-    git clone git@github.com:hatchways-community/7e25dd52c32e4cf3a1822a0d900665e2.git
+    git clone git@github.com:christospi/clerks-api.git
     ```
 
 2. **Navigate to the application directory:**
 
     ```bash
-    cd 7e25dd52c32e4cf3a1822a0d900665e2/clerks-api
+    cd clerks-api
     ```
 
 3. **Environment configuration:**
