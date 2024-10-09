@@ -11,7 +11,7 @@ Clerks API was built using:
 
 ## Introduction
 
-The purpose of this project is to showcase best practices, coding principles, and structuring of a Rails API application. For more information on the requirements, check: [Clerks API requirements](https://github.com/hatchways-community/7e25dd52c32e4cf3a1822a0d900665e2/tree/main#readme)
+The purpose of this project is to showcase best practices, coding principles, and structuring of a Rails API application.
 
 ## Prerequisites
 
